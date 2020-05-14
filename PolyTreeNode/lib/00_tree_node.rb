@@ -44,4 +44,8 @@ class PolyTreeNode
         end
         nil
     end
+
+    def inspect
+        "value: #{@value}".inspect
+    end
 end
