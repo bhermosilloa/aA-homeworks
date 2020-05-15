@@ -3,6 +3,7 @@
 require 'rspec'
 require 'tic_tac_toe'
 require 'tic_tac_toe_node'
+require 'byebug'
 
 describe TicTacToeNode do
   let(:empty_board_node) do
