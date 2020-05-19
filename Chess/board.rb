@@ -27,15 +27,16 @@ class Board
     end
     
     def move_piece(color_in_turn, start_pos, end_pos)
-        raise NoPieceInPosition if empty?(start_pos)
+        raise InvalidPositionError unless valid_pos?(start_pos)
+        raise NoPieceInPositionError if empty?(start_pos)
         
         piece = self[start_pos]
         if piece.color != color_in_turn
-            raise InvalidColorPiece 
+            raise InvalidColorPieceError 
         elsif !piece.moves.include?(end_pos)
-            raise InvalidPieceMove
+            raise InvalidPieceMoveError
         elsif !piece.valid_moves.include?(end_pos)
-            raise MovingIntoCheck
+            raise MovingIntoCheckError
         end
         move_piece!(start_pos, end_pos)
     end
@@ -56,7 +57,7 @@ class Board
     end
     
     def checkmate?(color)
-        return false unless in_check(color)
+        return false unless in_check?(color)
         pieces.select { |piece| piece.color == color }.all? do |piece|
             piece.valid_moves.empty?
         end
