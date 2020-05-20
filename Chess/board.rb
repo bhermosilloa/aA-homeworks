@@ -3,6 +3,8 @@ require_relative 'exceptions'
 
 class Board
 
+    attr_reader :rows
+
     def initialize(fill_with_pieces = true)
         @sentinel = NullPiece.instance
         @rows = Array.new(8) { Array.new(8, @sentinel) }
@@ -11,11 +13,6 @@ class Board
     
     def [](pos)
         @rows[pos[0]][pos[1]]
-    end
-
-    def render
-        @rows.each { |row| puts row.join(" ") }
-        true
     end
     
     def []=(pos, val)
