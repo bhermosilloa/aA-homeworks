@@ -7,16 +7,16 @@ class Board
 
     def initialize(fill_with_pieces = true)
         @sentinel = NullPiece.instance
-        @rows = Array.new(8) { Array.new(8, @sentinel) }
+        @rows = Array.new(8) { Array.new(8, sentinel) }
         fill_board_with_pieces if fill_with_pieces
     end
     
     def [](pos)
-        @rows[pos[0]][pos[1]]
+        rows[pos[0]][pos[1]]
     end
     
     def []=(pos, val)
-        @rows[pos[0]][pos[1]] = val
+        rows[pos[0]][pos[1]] = val
     end
     
     def add_piece(piece, pos)
@@ -26,7 +26,6 @@ class Board
     def move_piece(color_in_turn, start_pos, end_pos)
         raise InvalidPositionError unless valid_pos?(start_pos)
         raise NoPieceInPositionError if empty?(start_pos)
-        
         piece = self[start_pos]
         if piece.color != color_in_turn
             raise InvalidColorPieceError 
@@ -40,7 +39,7 @@ class Board
     
     def move_piece!(start_pos, end_pos)
         piece = self[start_pos]
-        self[start_pos] = @sentinel
+        self[start_pos] = sentinel
         self[end_pos] = piece
         piece.pos = end_pos
     end
@@ -54,7 +53,6 @@ class Board
     end
     
     def checkmate?(color)
-        return false unless in_check?(color)
         pieces.select { |piece| piece.color == color }.all? do |piece|
             piece.valid_moves.empty?
         end
@@ -70,7 +68,7 @@ class Board
     end
     
     def pieces
-        @rows.flatten.reject(&:empty?)
+        rows.flatten.reject(&:empty?)
     end
     
     def dup
@@ -80,6 +78,8 @@ class Board
     end
     
     private
+
+    attr_reader :sentinel
 
     def fill_board_with_pieces
         %i(white black).each do |color|
@@ -99,10 +99,6 @@ class Board
     def fill_pawn_row(color)
         row = color == :white ? 6 : 1
         (0..7).each { |col| Pawn.new(color, self, [row, col]) }
-    end
-
-    def inspect
-        "Board".inspect
     end
 
 end

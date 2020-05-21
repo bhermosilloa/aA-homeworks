@@ -4,13 +4,22 @@ require_relative 'board'
 
 class Display
 
+    attr_reader :cursor, :board
+
     def initialize(board)
         @board = board
-        @cursor = Cursor.new([0,0], board)
+        @cursor = Cursor.new([6,3], board)
     end
 
+    def render
+        system("clear")
+        build_grid.each { |row| puts row.join }
+    end
+
+    private
+
     def build_grid
-        @board.rows.map.with_index do |row, x|
+        board.rows.map.with_index do |row, x|
             build_row(row, x)
         end
     end
@@ -23,8 +32,8 @@ class Display
     end
 
     def colors_for(x, y)
-        if [x, y] == @cursor.cursor_pos
-            bg = @cursor.selected ? :light_green : :light_red
+        if [x, y] == cursor.cursor_pos
+            bg = cursor.selected ? :light_green : :light_red
         elsif (x + y).odd?
             bg = :light_blue
         else
@@ -32,26 +41,5 @@ class Display
         end
         { background: bg }
     end
-
-    def render
-        system("clear")
-        build_grid.each { |row| puts row.join }
-    end
-
-    def loop_render
-        loop do
-            self.render
-            @cursor.get_input
-        end
-    end
-
-end
-
-if $PROGRAM_NAME == __FILE__
-
-  board = Board.new
-  display = Display.new(board)
-
-  display.loop_render
 
 end

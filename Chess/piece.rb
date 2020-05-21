@@ -23,18 +23,16 @@ class Piece
         moves.reject { |end_pos| move_into_check?(end_pos) }
     end
 
+    private
+
     def move_into_check?(end_pos)
-        test_board = @board.dup
-        test_board.move_piece!(@pos, end_pos)
-        test_board.in_check?(@color)
+        test_board = board.dup
+        test_board.move_piece!(pos, end_pos)
+        test_board.in_check?(color)
     end
 
     def symbol
         # This method gets implemented in a subclass (it returns a unicode chess char in the piece's color)
-    end
-
-    def inspect
-        "#{@color.capitalize} #{self.class} - #{@pos}".inspect
     end
 
 end
