@@ -1,0 +1,8 @@
+alias ber='bundle exec rspec'
+alias bi='bundle install'
+alias gl='git log'
+alias gcm='git commit -m'
+alias gb='git branch'
+alias gco='git checkout'
+alias gaa='git add -A'
+alias gpom='git push origin master'
