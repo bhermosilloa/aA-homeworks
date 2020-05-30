@@ -30,7 +30,7 @@ class Game
     end
 
     def antes
-        players.each { |player| add_to_the_pot(player.pay_ante) unless player.hand.nil? }
+        players.each { |player| add_to_the_pot(player.pay_ante(10)) unless player.hand.nil? }
     end
 
     def shift
@@ -85,7 +85,7 @@ class Game
 
                 actual_player_index = (current_player_index + player_rotation)%players.length
 
-                # Activate if two or more players are actually facing each other
+                # Activate #timer if two or more players are actually facing each other
                 # timer(actual_player_index)
 
                 render_dealer(actual_player_index, leading_bet)
@@ -151,19 +151,20 @@ class Game
             end
         end
         puts
-        puts "Current player: #{player_number}"
+        puts "Current player: #{player_number} - #{actual_player.hand} (#{actual_player.hand.hand})"
+        puts
         puts "Player #{player_number} has bet: $#{actual_player.bet}" if actual_player.bet > 0
         puts "Call with $#{leading_bet - actual_player.bet}?" if leading_bet > 0
-        puts "Player #{player_number}'s hand is: #{actual_player.hand} (#{actual_player.hand.hand})"
+        puts if leading_bet > 0
     end
 
     def change_cards
         players.each_with_index do |player, current_player_index|
             break if no_more_active_players
             next if player.folded? || player.hand.nil?
-            # Activate if two or more players are actually facing each other
-            # timer(current_player_index)
             real_player_index = (current_player_index + player_rotation)%players.length + 1
+            # Activate #timer if two or more players are actually facing each other
+            # timer(real_player_index)
             system("clear")
             print "Player #{real_player_index}, your cards to trade: "
             puts player.hand

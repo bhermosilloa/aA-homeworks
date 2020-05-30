@@ -15,7 +15,7 @@ class Card
     def to_s
         case suit
         when :spades
-            # "#{rank}♠".black.on_light_white.bold
+            # "#{rank}♠".black.on_light_white.bold - colorized cards
             "#{rank}♠"
         when :diamonds
             # "#{rank}♦".light_blue.on_light_white.bold

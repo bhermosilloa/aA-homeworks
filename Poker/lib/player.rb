@@ -15,8 +15,7 @@ class Player
     end
 
     def decide
-        puts
-        print "(c)all - (f)old - (r)aise/bet - (a)all-in  >> "
+        print "(c)all/pass - (f)old - (r)aise/bet - (a)all-in  >> "
         decision = gets.chomp.downcase
         case decision
         when "c" then :call
@@ -29,10 +28,10 @@ class Player
         end
     end
 
-    def pay_ante
-        if bankroll > 10
-            self.bankroll -= 10
-            10
+    def pay_ante(n)
+        if bankroll > n
+            self.bankroll -= n
+            n
         else
             bkr = bankroll
             self.bankroll = 1
@@ -41,7 +40,7 @@ class Player
     end
 
     def make_bet
-        print "(bankroll: $#{bankroll} - Enter your bet >> $"
+        print "(bankroll: $#{bankroll}) - Enter your bet >> $"
         bet = gets.chomp.to_i
         raise "not enough money" unless bet <= bankroll
         bet

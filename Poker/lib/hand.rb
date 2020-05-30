@@ -44,11 +44,9 @@ class Hand
         return -1 if HAND_RANKINGS[hand] < HAND_RANKINGS[hand2.hand]
     end
 
-    protected
-
-    attr_reader :hand2
-
     private
+    
+    attr_reader :hand2
 
     def throw_cards_away(trash_cards)
         trash_cards.each { |card| cards.delete(card) }
@@ -65,6 +63,10 @@ class Hand
 end
 
 class Array
+
+    # The original Array#delete method, when asked to delete a certain
+    # card from a hand, it deleted all cards with the same value included
+    # in the hand. So I overrided it.
 
     def delete(object)
         self.reject! { |ele| ele.object_id == object.object_id }

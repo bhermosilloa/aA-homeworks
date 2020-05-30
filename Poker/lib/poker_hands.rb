@@ -4,6 +4,8 @@ module PokerHands
 
     include WinnerHand
 
+    private
+
     NEXT_RANKS = {
         "A" => "K",
         "2" => "A",
@@ -19,7 +21,7 @@ module PokerHands
         "Q" => "J",
         "K" => "Q"
     }
-
+    
     def which_hand
         if straight_flush
             :straight_flush
